@@ -1,7 +1,11 @@
 M = []
+
+
 def isASolution(m, x):
-    return len(m)==x
-def doPasswordResult(x, y, m = []):
+    return len(m) == x
+
+
+def doPasswordResult(x, y, m=[]):
     global M
     if isASolution(m, x):
         M.append(m.copy())
@@ -11,7 +15,8 @@ def doPasswordResult(x, y, m = []):
             doPasswordResult(x, y, m)
             m.pop()
 
-def doLotteryResult(availableList, nItem, m = []):
+
+def doLotteryResult(availableList, nItem, m=[]):
     global M
     if isASolution(m, nItem):
         M.append(m.copy())
@@ -24,5 +29,3 @@ def doLotteryResult(availableList, nItem, m = []):
             doLotteryResult(l, nItem, m)
             m.pop()
             l = copyL
-            
-
