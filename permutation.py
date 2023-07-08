@@ -1,31 +1,51 @@
-M = []
+from typing import Iterable, TypeVar
+
+T = TypeVar("T")
 
 
-def isASolution(m, x):
-    return len(m) == x
+def gen_combination_results(choices: list[T], length: int) -> set[tuple[T]]:
+    results = set()
+
+    def helper(current: tuple = tuple(), remaining_choices: list[T] = choices) -> None:
+        if len(current) >= length:
+            results.add(current)
+            return
+        for idx, each in enumerate(remaining_choices):
+            helper(
+                current + (each,),
+                remaining_choices[:idx] + remaining_choices[idx + 1 :],
+            )
+
+    helper()
+    return results
 
 
-def doPasswordResult(x, y, m=[]):
-    global M
-    if isASolution(m, x):
-        M.append(m.copy())
-    else:
-        for i in range(1, y+1):
-            m.append(i)
-            doPasswordResult(x, y, m)
-            m.pop()
+def gen_permutation_results(choices: Iterable[T], length: int) -> set[tuple[T]]:
+    results = set()
+
+    def helper(current: tuple = tuple()) -> None:
+        if len(current) >= length:
+            results.add(current)
+            return
+        for each in choices:
+            helper(current + (each,))
+
+    helper()
+    return results
 
 
-def doLotteryResult(availableList, nItem, m=[]):
-    global M
-    if isASolution(m, nItem):
-        M.append(m.copy())
-    else:
-        l = availableList.copy()
-        for i in range(len(l)):
-            m.append(l[i])
-            copyL = l.copy()
-            l.pop(i)
-            doLotteryResult(l, nItem, m)
-            m.pop()
-            l = copyL
+if __name__ == "__main__":
+    import time
+
+    from mystdout import ForegroundColor, mystdout
+
+    start = time.time()
+    n = 10
+    for i in range(5, 11):
+        result = gen_combination_results([i for i in range(n)], i)
+        # assert len(result) == n**i, "Wrong number of result!"
+        mystdout(
+            f"({n}, {i}) {round(time.time() - start, 4)} sec",
+            foreground_color=ForegroundColor.BLUE,
+            simulate_typing=False,
+        )
