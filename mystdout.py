@@ -66,5 +66,19 @@ def mystdout(
         print(suffix)
 
 
+def decorate(
+    content,
+    text_style: TextStyle = TextStyle.NORMAL,
+    foreground_color: ForegroundColor = ForegroundColor.DEFAULT,
+    background_color: BackgroundColor = BackgroundColor.DEFAULT,
+) -> str:
+    prefix = f"\033[{text_style};{foreground_color};{background_color}m"
+    suffix = "\033[0m"
+    return f"{prefix}{content}{suffix}"
+
+
 if __name__ == "__main__":
     mystdout("hello world", TextStyle.ITALIC, simulate_typing=True)
+    print(
+        f"You get {decorate(5, TextStyle.UNDERLINED, foreground_color=ForegroundColor.YELLOW)} points."
+    )

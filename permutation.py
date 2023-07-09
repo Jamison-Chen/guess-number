@@ -3,7 +3,7 @@ from typing import Iterable, TypeVar
 T = TypeVar("T")
 
 
-def gen_combination_results(choices: list[T], length: int) -> set[tuple[T]]:
+def gen_lottery_results(choices: list[T], length: int) -> set[tuple[T]]:
     results = set()
 
     def helper(current: tuple = tuple(), remaining_choices: list[T] = choices) -> None:
@@ -20,7 +20,7 @@ def gen_combination_results(choices: list[T], length: int) -> set[tuple[T]]:
     return results
 
 
-def gen_permutation_results(choices: Iterable[T], length: int) -> set[tuple[T]]:
+def gen_password_results(choices: Iterable[T], length: int) -> set[tuple[T]]:
     results = set()
 
     def helper(current: tuple = tuple()) -> None:
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     start = time.time()
     n = 10
     for i in range(5, 11):
-        result = gen_combination_results([i for i in range(n)], i)
+        result = gen_lottery_results([i for i in range(n)], i)
         # assert len(result) == n**i, "Wrong number of result!"
         mystdout(
             f"({n}, {i}) {round(time.time() - start, 4)} sec",
